@@ -80,14 +80,4 @@ streamlit run app.py
 | `CHECKPOINT_DIR` | `/tmp/streampulse/checkpoints` | Spark streaming checkpoints |
 | `PARQUET_OUT` | `/tmp/streampulse/anomalies_parquet` | Batch-layer sink path |
 
-## Notes on resume claims
 
-- "50K+ events/minute, sub-second latency": tune `--rate` on the producer and
-  Kafka partition count in `docker-compose.yml` (currently 6 partitions) to
-  hit and demonstrate this throughput; the 2-second Kafka sink trigger keeps
-  detection-to-dashboard latency in the seconds range.
-- "Rolling-window anomaly detection": implemented via Spark's `window()` +
-  per-device z-score scoring, not a placeholder — see `anomaly_detector.py`.
-- If you present this in interviews, be ready to explain the watermark/window
-  tradeoffs (late data handling) and why aggregation-time scoring was chosen
-  over a stream-stream join for efficiency at this scale.
